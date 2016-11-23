@@ -10,16 +10,33 @@ job('idod-adapter') {
             artifactNumToKeep(-1)
         }
 
-        def scmparam = project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
+        project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
             configVersion ('2')
-            def paramdef = 'userRemoteConfigs' {
-                def strDefinitions = 'hudson.plugins.git.UserRemoteConfig' {
+            'userRemoteConfigs' {
+                'hudson.plugins.git.UserRemoteConfig' {
                     refspec ('$GERRIT_REFSPEC')
                     url ('ssh://idondemandhudson@dev.idondemand.com:29418/idod/extras/adapter')
                     credentialsId ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                 }
-            }           
+            }      
+            'branches' {
+                'hudson.plugins.git.BranchSpec' {
+                    name ('master')
+                }
+            }
+            doGenerateSubmoduleConfigurations ('false')
+            submoduleCfg (class:"list")
+            'extensions' {
+                'hudson.plugins.git.extensions.impl.BuildChooserSetting' {
+                    'buildChooser' (class:"com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser", plugin:"gerrit-trigger@2.11.0"){                  
+                        separator ('#')
+                    }
+                }
+            'hudson.plugins.git.extensions.impl.CleanCheckout' {}
+            }   
+
         }
+
 
         project << {
             quietPeriod ('6')
@@ -29,12 +46,12 @@ job('idod-adapter') {
             blockBuildWhenUpstreamBuilding ('false')
         }
 
-        def gerritparam = project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' {
-            def paramdef = 'slaveWorkspacesUsage' {
-                def strDefinitions = 'entry' {
+        project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' {
+            'slaveWorkspacesUsage' {
+                'entry' {
                     string ('slave-ITS Linux 3')
-                    def paramdef = 'concurrent-hash-map' {
-                        def strDefinitions = 'entry' {
+                    'concurrent-hash-map' {
+                        'entry' {
                             string ('/home/ubuntu/workspace/idod-adapter')
                         }
                     }
@@ -44,7 +61,7 @@ job('idod-adapter') {
         }
 
         
-        def matrix = project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
+        project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
             permission('hudson.model.Item.Workspace:thu')
             permission('hudson.model.Item.Discover:thu')
@@ -52,9 +69,9 @@ job('idod-adapter') {
             permission('hudson.model.Item.Cancel:thu')
         }
         
-        def param = project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
-            def paramdef = 'parameterDefinitions' {
-                def strDefinitions = 'hudson.model.StringParameterDefinition' {
+        project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
+            'parameterDefinitions' {
+                'hudson.model.StringParameterDefinition' {
                     name ('GERRIT_REFSPEC')
                     defaultValue ('refs/heads/master')
                 }
@@ -71,6 +88,48 @@ job('idod-adapter') {
                 recordBuildArtifacts(true)
             }
         }     
+
+        project / triggers << 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.11.0") {     
+            spec()
+            'gerritProjects' {
+                'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject' {
+                    compareType ('PLAIN')
+                    pattern('idod/extras/adapter')
+                    'branches' {
+                        'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch' {
+                            compareType ('PLAIN')
+                            pattern ('master')
+                        }
+                    }
+                }
+            }
+            'skipVote' {
+                onSuccessful('false')
+                onFailed('false')
+                onUnstable('false')
+                onNotBuilt('false')
+            }
+            silentMode('false')
+            escapeQuotes('true')
+            noNameAndEmailParameters('true')
+            buildStartMessage()
+            buildFailureMessage()
+            buildSuccessfulMessage()
+            buildUnstableMessage()
+            buildNotBuiltMessage()
+            buildUnsuccessfulFilepath()
+            customUrl()
+            serverName('__ANY__')
+            'triggerOnEvents' {
+                'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent' {}
+            }
+            allowTriggeringUnreviewedPatches('false')
+            dynamicTriggerConfiguration('false')
+            triggerConfigURL()
+            triggerInformationAction()
+        }
+
+
     }
 
     steps {
