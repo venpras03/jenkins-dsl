@@ -7,7 +7,7 @@ job('idod-adapter') {
     configure { project ->
         
         project / 'logRotator' << {
-            daysToKeep(-1)
+            daysToKeep(14)
             numToKeep(10)
             artifactDaysToKeep(-1)
             artifactNumToKeep(-1)
