@@ -6,13 +6,13 @@ job('idod-adapter') {
     
     configure { project ->
         
-        project / logRotator << 'hudson.tasks.LogRotator' {
-            daysToKeep(14)
-            numToKeep(40)
+        project / 'logRotator' << {
+            daysToKeep(-1)
+            numToKeep(10)
             artifactDaysToKeep(-1)
             artifactNumToKeep(-1)
-        }      
-
+        }
+        
         def matrix = project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
             permission('hudson.model.Item.Workspace:thu')
