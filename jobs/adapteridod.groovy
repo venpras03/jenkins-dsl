@@ -1,17 +1,48 @@
 job('idod-adapter') {
     description 'Build and test the app.'
-    scm {
-        git('ssh://idondemandhudson@dev.idondemand.com:29418/idod/extras/adapter')
-    }
     
     configure { project ->
         
         project / 'logRotator' << {
             daysToKeep(14)
-            numToKeep(10)
+            numToKeep(40)
             artifactDaysToKeep(-1)
             artifactNumToKeep(-1)
         }
+
+        def scmparam = project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
+            configVersion ('2')
+            def paramdef = 'userRemoteConfigs' {
+                def strDefinitions = 'hudson.plugins.git.UserRemoteConfig' {
+                    refspec ('$GERRIT_REFSPEC')
+                    url ('ssh://idondemandhudson@dev.idondemand.com:29418/idod/extras/adapter')
+                    credentialsId ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
+                }
+            }           
+        }
+
+        project << {
+            quietPeriod ('6')
+            canRoam ('true')
+            disabled ('false')
+            blockBuildWhenDownstreamBuilding ('false')
+            blockBuildWhenUpstreamBuilding ('false')
+        }
+
+        def gerritparam = project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' {
+            def paramdef = 'slaveWorkspacesUsage' {
+                def strDefinitions = 'entry' {
+                    string ('slave-ITS Linux 3')
+                    def paramdef = 'concurrent-hash-map' {
+                        def strDefinitions = 'entry' {
+                            string ('/home/ubuntu/workspace/idod-adapter')
+                        }
+                    }
+                }
+            }
+            diskUsageWithoutBuilds ('0')
+        }
+
         
         def matrix = project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
