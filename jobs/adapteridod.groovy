@@ -89,8 +89,8 @@ job('idod-adapter') {
             }
         }     
 
-        project / trigger << 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.11.0") {     
-            spec()
+        project / triggers << 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.11.0") {     
+            spec ''
             'gerritProjects' {
                 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject' {
                     compareType ('PLAIN')
