@@ -5,6 +5,14 @@ job('idod-adapter') {
     }
     
     configure { project ->
+        
+        project / logRotator << 'hudson.tasks.LogRotator' {
+            daysToKeep(14)
+            numToKeep(40)
+            artifactDaysToKeep(-1)
+            artifactNumToKeep(-1)
+        }      
+
         def matrix = project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
             permission('hudson.model.Item.Workspace:thu')
@@ -21,22 +29,7 @@ job('idod-adapter') {
                 }
             }
         }
-    }
-
-    configure { project ->
-        def trigger = project / 'triggers' / 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' {
-
-    }
-    } 
-
-    steps {
-        gradle {
-            useWrapper true
-            tasks 'build'
-        }
-    }    
-
-    configure { project ->
+        
         project / publishers << 'hudson.tasks.ArtifactArchiver' {
             artifacts ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
             latestOnly(false)
@@ -46,8 +39,16 @@ job('idod-adapter') {
             targets {
                 recordBuildArtifacts(true)
             }
-        }        
+        }     
     }
 
+    steps {
+        gradle {
+            useWrapper true
+            makeExecutable false
+            fromRootBuildScriptDir false
+            tasks 'build'
+        }
+    }    
 }
         
