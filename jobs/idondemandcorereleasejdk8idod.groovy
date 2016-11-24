@@ -55,6 +55,20 @@ job('idondemand-core-release-jdk8') {
 
         }
 
+        project / triggers << {
+            'jenkins.triggers.ReverseBuildTrigger'{
+                upstreamProjects'Project name'
+                'threshold'{
+                    spec''
+                    name ('SUCCESS')
+                    ordinal ('0')
+                    color ('BLUE')
+                    completeBuild ('true')
+                }    
+            }
+
+        }
+
         project << {
             quietPeriod ('74')
             canRoam ('true')
@@ -67,7 +81,9 @@ job('idondemand-core-release-jdk8') {
         }
 
         project / builders << 'hudson.tasks.Shell' {
-            command ('git clean -fdx && git reset --hard HEAD java -version git show HEAD')
+            command ('git clean -fdx && git reset --hard HEAD')
+            command ('java -version')
+            command ('git show HEAD')
         }
         
         project / builders << 'org.jvnet.hudson.plugins.exclusion.CriticalBlockStart' (plugin:"Exclusion@0.8") {
@@ -81,6 +97,7 @@ job('idondemand-core-release-jdk8') {
                 fromRootBuildScriptDir ('false')
                 useWorkspaceAsHome ('false')
             }
+            'org.jvnet.hudson.plugins.exclusion.CriticalBlockEnd' (plugin:"Exclusion@0.8") ''
         }
         
         project / publishers << 'hudson.tasks.ArtifactArchiver' {
