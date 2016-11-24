@@ -10,33 +10,23 @@ job('idondemand-core-release-jdk8') {
             artifactDaysToKeep(7)
             artifactNumToKeep(20)
         }
-
         project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
             'parameterDefinitions' {
                 'hudson.model.StringParameterDefinition' {
                     name ('database')
-                    defaultValue ('postgres')
+                    defaultValue ('postgres') 
                 }
-            }
-        }
-
-        project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
-            'parameterDefinitions' {
                 'hudson.model.StringParameterDefinition' {
                     name ('GERRIT_REFSPEC')
-                    defaultValue ('refs/heads/master')
+                    defaultValue ('refs/heads/master') 
                 }
-            }
-        }
-
-        project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
-            'parameterDefinitions' {
                 'hudson.model.StringParameterDefinition' {
                     name ('GIT_BRANCH')
                     defaultValue ('master')
                 }
             }
-        }              
+        }
+               
 
         project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
             configVersion ('2')
