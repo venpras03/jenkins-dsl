@@ -97,7 +97,7 @@ job('idondemand-core-release-jdk8') {
                 fromRootBuildScriptDir ('false')
                 useWorkspaceAsHome ('false')
             }
-            'org.jvnet.hudson.plugins.exclusion.CriticalBlockEnd' (plugin:"Exclusion@0.8") ''
+            'org.jvnet.hudson.plugins.exclusion.CriticalBlockEnd' (plugin:"Exclusion@0.8") {}
         }
         
         project / publishers << 'hudson.tasks.ArtifactArchiver' {
