@@ -18,7 +18,7 @@ job('api-tool-publish') {
             permission('hudson.model.Item.Cancel:thu')
         }
 
-        project / properties << 'hudson.plugins.sonar.SonarPublisher' {
+        project / 'properties' << 'hudson.plugins.sonar.SonarPublisher' {
             jdk('jdk8')
         }       
           
