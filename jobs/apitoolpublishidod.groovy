@@ -111,13 +111,13 @@ job('api-tool-publish') {
 
         project << {
             quietPeriod ('5')
-            canRoam ('true')
+            canRoam ('false')
             disabled ('false')
             blockBuildWhenDownstreamBuilding ('false')
             blockBuildWhenUpstreamBuilding ('false')
             keepDependencies ('false')
             concurrentBuild ('true')
-            assignedLabel ('windows')
+            assignedNode ('windows')
             
         }
 
