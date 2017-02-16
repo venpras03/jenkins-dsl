@@ -17,10 +17,6 @@ job('api-tool-publish') {
             permission('hudson.model.Item.Read:thu')
             permission('hudson.model.Item.Cancel:thu')
         }
-
-        project / 'properties' / 'hudson.model.labels.LabelExpression.Or' {
-                'hudson.model.labels.LabelAtom'('windows') 
-        }        
           
         project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
             diskUsageWithoutBuilds ('14204379')
@@ -121,6 +117,7 @@ job('api-tool-publish') {
             blockBuildWhenUpstreamBuilding ('false')
             keepDependencies ('false')
             concurrentBuild ('true')
+            assignedLabel ('windows')
             
         }
 
