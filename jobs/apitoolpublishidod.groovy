@@ -16,7 +16,6 @@ job('api-tool-publish') {
             permission('hudson.model.Item.Discover:thu')
             permission('hudson.model.Item.Read:thu')
             permission('hudson.model.Item.Cancel:thu')
-            jdk('jdk8')
         }
           
         project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
@@ -118,7 +117,8 @@ job('api-tool-publish') {
             blockBuildWhenUpstreamBuilding ('false')
             keepDependencies ('false')
             concurrentBuild ('true')
-            assignedNode ('windows')            
+            assignedNode ('windows')     
+            jdk('jdk8')       
         }
 
         project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
