@@ -117,8 +117,8 @@ job('api-tool-publish') {
             blockBuildWhenUpstreamBuilding ('false')
             keepDependencies ('false')
             concurrentBuild ('true')
-            label('windows')
-            jdk('jdk8')
+            Label('windows')
+            JDK('jdk8')
         }
 
         project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
