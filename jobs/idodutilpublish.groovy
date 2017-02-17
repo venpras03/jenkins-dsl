@@ -40,7 +40,7 @@ job('idod-util-publish') {
             'userRemoteConfigs' {
                 'hudson.plugins.git.UserRemoteConfig' {
                     refspec ('$GERRIT_REFSPEC')
-                    url ('ssh://idondemandhudson@git.dev.identiv.com:29418/its/contrib/softcert-tool')
+                    url ('ssh://idondemandhudson@git.dev.identiv.com:29418/idod/java/util')
                     credentialsId ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                 }
             }
@@ -66,7 +66,7 @@ job('idod-util-publish') {
             'gerritProjects' {
                 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject' {
                     compareType ('PLAIN')
-                    pattern('its/contrib/softcert-tool')
+                    pattern('idod/java/util')
                     'branches' {
                         'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch' {
                             compareType ('REG_EXP')
