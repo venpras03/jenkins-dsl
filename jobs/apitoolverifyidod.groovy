@@ -1,15 +1,14 @@
 job('api-tool-verify') {
     description ''
-    
     configure { project ->
-        
+
         project / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
             daysToKeep(7)
             numToKeep(20)
             artifactDaysToKeep(7)
             artifactNumToKeep(20)
         }
-        
+
         project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
             'parameterDefinitions' {
                 'hudson.model.StringParameterDefinition' {
@@ -17,7 +16,22 @@ job('api-tool-verify') {
                     defaultValue ('refs/heads/master')
                 }
             }
-        }        
+        }
+
+        project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
+            diskUsageWithoutBuilds ('13766348')
+            'slaveWorkspacesUsage' {
+                'entry' {
+                    string ()
+                    'concurrent-hash-map' {
+                        'entry' {
+                            string (/c::\hudson\jobs\api-tool-verify\workspace/)
+                            'long' ('14824446')
+                        }
+                    }
+                }
+            }
+        }           
 
         project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
             configVersion ('2')
@@ -27,7 +41,7 @@ job('api-tool-verify') {
                     url ('ssh://idondemandhudson@git.dev.identiv.com:29418/its/contrib/softcert-tool')
                     credentialsId ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                 }
-            }      
+            }
             'branches' {
                 'hudson.plugins.git.BranchSpec' {
                     name ('master')
@@ -42,8 +56,7 @@ job('api-tool-verify') {
                     }
                 }
             'hudson.plugins.git.extensions.impl.CleanCheckout' {}
-            }   
-
+            }
         }
 
         project / triggers << 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.22.0") {     
@@ -84,8 +97,7 @@ job('api-tool-verify') {
             dynamicTriggerConfiguration('false')
             triggerConfigURL()
             triggerInformationAction()
-        }        
-
+        }
 
         project << {
             quietPeriod ('5')
@@ -98,35 +110,12 @@ job('api-tool-verify') {
             concurrentBuild ('true')
         }
 
-        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
-            description ('Clean workspace')
-            switches''
-            tasks ('clean')
-            rootBuildScriptDir''
-            buildFile''
-            useWrapper ('true')
-            makeExecutable ('false')
-            fromRootBuildScriptDir ('true')
-            useWorkspaceAsHome ('false')
-        }
-        
         project / builders << 'hudson.plugins.msbuild.MsBuildBuilder' (plugin:"msbuild@1.16") {
             msBuildName ('MSBuild35')
             msBuildFile ('idondemandSoftCertTool.sln')
             cmdLineArgs ('/p:Configuration=Release /t:Clean;Rebuild')
             buildVariablesAsProperties ('true')
             continueOnBuildFailure ('false')
-        }
-        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
-            description ('Upload artifacts')
-            switches''
-            tasks ('upload')
-            rootBuildScriptDir''
-            buildFile''
-            useWrapper ('true')
-            makeExecutable ('false')
-            fromRootBuildScriptDir ('true')
-            useWorkspaceAsHome ('false')
         }
 
         project / publishers << 'hudson.tasks.ArtifactArchiver' {
@@ -138,7 +127,6 @@ job('api-tool-verify') {
             targets {
                 recordBuildArtifacts(true)
             }
-        }     
-
-    }   
+        }
+    }
 }
