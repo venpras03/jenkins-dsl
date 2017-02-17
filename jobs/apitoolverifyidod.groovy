@@ -108,7 +108,6 @@ job('api-tool-verify') {
             keepDependencies ('false')
             assignedNode('windows')
             concurrentBuild ('true')
-            name ('api-tool-verify')
         }
 
         project / builders << 'hudson.plugins.msbuild.MsBuildBuilder' (plugin:"msbuild@1.16") {
