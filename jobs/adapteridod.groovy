@@ -8,8 +8,6 @@ job('idod-adapter') {
         artifactNumToKeep(-1)
     }
 
-    jdk ('jdk8')
-
     configure { project ->
 
         project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
