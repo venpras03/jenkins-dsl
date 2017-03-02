@@ -18,22 +18,16 @@ job('api-tool-verify') {
             }
         }
 
-        project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
-            diskUsageWithoutBuilds ('13766348')
-            'slaveWorkspacesUsage' {
-                'entry' {
-                    string ()
-                    'concurrent-hash-map' {
-                        'entry' {
-                            string (/c::\hudson\jobs\api-tool-verify\workspace/)
-                            'long' ('14824446')
-                        }
-                    }
-                }
-            }
-        }           
+        // Throttle property
+        project / 'properties' / 'hudson.plugins.throttleconcurrents.ThrottleJobProperty' (plugin:'throttle-concurrents@1.9.0') {
+            maxConcurrentPerNode ('0')
+            maxConcurrentTotal ('0')
+            throttleEnabled ('false')
+            throttleOption ('project')
+        }
 
-        project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
+        // Git configuration
+        project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@3.0.5') << {
             configVersion ('2')
             'userRemoteConfigs' {
                 'hudson.plugins.git.UserRemoteConfig' {

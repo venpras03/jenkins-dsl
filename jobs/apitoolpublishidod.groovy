@@ -1,6 +1,8 @@
 job('api-tool-publish') {
     description ''
 
+    jdk ('jdk8')
+
     configure { project ->
 
         project / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
@@ -10,6 +12,8 @@ job('api-tool-publish') {
             artifactNumToKeep(20)
         }
 
+
+
         project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
             permission('hudson.model.Item.Workspace:thu')
@@ -18,10 +22,6 @@ job('api-tool-publish') {
             permission('hudson.model.Item.Cancel:thu')
         }
 
-        project / 'properties' << {
-            jdk('jdk8')
-        }       
-        
         // Disk usage
         project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
             diskUsageWithoutBuilds ('14204379')
@@ -123,7 +123,7 @@ job('api-tool-publish') {
             assignedNode ('windows')     
         }
 
-        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
+        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.26") {
             description ('Clean workspace')
             switches''
             tasks ('clean')
@@ -142,7 +142,7 @@ job('api-tool-publish') {
             buildVariablesAsProperties ('true')
             continueOnBuildFailure ('false')
         }
-        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.23") {
+        project / builders << 'hudson.plugins.gradle.Gradle' (plugin:"gradle@1.26") {
             description ('Upload artifacts')
             switches''
             tasks ('upload')
