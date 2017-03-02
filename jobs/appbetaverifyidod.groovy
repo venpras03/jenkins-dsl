@@ -3,7 +3,7 @@ job('app-beta-verify') {
     scm {
         git('ssh://idondemandhudson@git.dev.identiv.com:29418/idod/chef/instances/beta')
     }
-    
+
     configure { project ->
         def matrix = project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')

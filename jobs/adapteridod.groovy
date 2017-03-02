@@ -4,8 +4,8 @@ import lib.*
 job('idod-adapter') {
     description 'Build and test the app.'
 
-    myClosure (10, 10, 10, 10)
-
+    GTemplate.myClosure (10, 10, 10, 10)
+    
     jdk ('jdk8')
 
     configure { project ->
