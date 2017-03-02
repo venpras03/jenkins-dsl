@@ -18,10 +18,11 @@ job('api-tool-publish') {
             permission('hudson.model.Item.Cancel:thu')
         }
 
-        project / 'properties' << 'hudson.plugins.sonar.SonarPublisher' {
+        project / 'properties' << {
             jdk('jdk8')
         }       
-          
+        
+        // Disk usage
         project / 'properties' / 'hudson.plugins.disk__usage.DiskUsageProperty' (plugin:'disk-usage@0.22') {
             diskUsageWithoutBuilds ('14204379')
             'slaveWorkspacesUsage' {

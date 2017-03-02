@@ -1,16 +1,16 @@
 job('idod-adapter') {
     description 'Build and test the app.'
 
-    logrotator {
+    logRotator {
         daysToKeep(14)
         numToKeep(40)
         artifactDaysToKeep(-1)
         artifactNumToKeep(-1)
     }
 
+    jdk ('jdk8')
+
     configure { project ->
-
-
 
         project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
             configVersion ('2')
