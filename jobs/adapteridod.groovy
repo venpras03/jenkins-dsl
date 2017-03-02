@@ -1,14 +1,16 @@
 job('idod-adapter') {
     description 'Build and test the app.'
-    
+
+    logrotator {
+        daysToKeep(14)
+        numToKeep(40)
+        artifactDaysToKeep(-1)
+        artifactNumToKeep(-1)
+    }
+
     configure { project ->
-        
-        project / 'logRotator' << {
-            daysToKeep(14)
-            numToKeep(40)
-            artifactDaysToKeep(-1)
-            artifactNumToKeep(-1)
-        }
+
+
 
         project / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
             configVersion ('2')
@@ -18,7 +20,7 @@ job('idod-adapter') {
                     url ('ssh://idondemandhudson@dev.idondemand.com:29418/idod/extras/adapter')
                     credentialsId ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                 }
-            }      
+            }
             'branches' {
                 'hudson.plugins.git.BranchSpec' {
                     name ('master')
@@ -33,7 +35,7 @@ job('idod-adapter') {
                     }
                 }
             'hudson.plugins.git.extensions.impl.CleanCheckout' {}
-            }   
+            }
 
         }
 
@@ -60,7 +62,7 @@ job('idod-adapter') {
             diskUsageWithoutBuilds ('0')
         }
 
-        
+
         project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
             permission('hudson.model.Item.Build:thu')
             permission('hudson.model.Item.Workspace:thu')
@@ -68,7 +70,7 @@ job('idod-adapter') {
             permission('hudson.model.Item.Read:thu')
             permission('hudson.model.Item.Cancel:thu')
         }
-        
+
         project / 'properties' / 'hudson.model.ParametersDefinitionProperty' {
             'parameterDefinitions' {
                 'hudson.model.StringParameterDefinition' {
@@ -77,7 +79,7 @@ job('idod-adapter') {
                 }
             }
         }
-        
+
         project / publishers << 'hudson.tasks.ArtifactArchiver' {
             artifacts ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
             latestOnly(false)
@@ -87,7 +89,7 @@ job('idod-adapter') {
             targets {
                 recordBuildArtifacts(true)
             }
-        }     
+        }
 
         project / triggers << 'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.22.0") {     
             spec ''
@@ -139,6 +141,5 @@ job('idod-adapter') {
             fromRootBuildScriptDir false
             tasks 'build'
         }
-    }    
+    }
 }
-        
