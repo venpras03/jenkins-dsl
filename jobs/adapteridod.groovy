@@ -1,12 +1,10 @@
+
+import lib.*
+
 job('idod-adapter') {
     description 'Build and test the app.'
 
-    logRotator {
-        daysToKeep(14)
-        numToKeep(40)
-        artifactDaysToKeep(-1)
-        artifactNumToKeep(-1)
-    }
+    myClosure (10, 10, 10, 10)
 
     jdk ('jdk8')
 
