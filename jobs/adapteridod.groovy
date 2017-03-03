@@ -1,5 +1,5 @@
 
-import lib.*
+import static lib.JobHelper.switchOnOrOff
 
 job('idod-adapter') {
     description 'Build and test the app.'
