@@ -4,9 +4,9 @@ import lib.*
 job('idod-adapter') {
     description 'Build and test the app.'
 
-    GTemplate.myClosure (10, 10, 10, 10)
-    
     jdk ('jdk8')
+
+    configure switchOnOrOff('on')
 
     configure { project ->
 
