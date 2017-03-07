@@ -1,5 +1,5 @@
 
-import static helpers.JobHelper.gerritconfig
+import static helpers.JobHelper.*
 
 job('idod-adapter') {
     description 'Build and test the app.'
