@@ -34,7 +34,7 @@ class JobHelper {
 
     static Closure gerritParameters(String value) {
         return {
-            it / 'hudson.model.ParametersDefinitionProperty' {
+            it / 'properties' << 'hudson.model.ParametersDefinitionProperty' {
                 'parameterDefinitions' {
                     'hudson.model.StringParameterDefinition' {
                         'name' ('GERRIT_REFSPEC')
