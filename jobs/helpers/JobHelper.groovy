@@ -8,7 +8,7 @@ class JobHelper {
                 'userRemoteConfigs' {
                     'hudson.plugins.git.UserRemoteConfig' {
                         'refspec' ('$GERRIT_REFSPEC')
-                        'url' ('ssh://idondemandhudson@dev.idondemand.com:29418/idod/extras/adapter')
+                        'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/idod/extras/adapter')
                         'credentialsId' (value)
                     }
                 }
