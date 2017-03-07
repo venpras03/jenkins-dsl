@@ -6,5 +6,7 @@ job('idod-adapter') {
 
     jdk ('jdk8')
 
+    configure gerritParameters ('refs/head/master')
     configure gerritConfigurations('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
+    configure gerritTrigger ('idod/extras/adapter')
 }
