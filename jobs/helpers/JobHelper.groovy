@@ -152,14 +152,14 @@ class JobHelper {
         }
     }
 
-    static Closure authorizationMatrix (String personNames) {
-        // Implement a each loop to do this for a list of names
-            //     project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
-    //         permission('hudson.model.Item.Build:thu')
-    //         permission('hudson.model.Item.Workspace:thu')
-    //         permission('hudson.model.Item.Discover:thu')
-    //         permission('hudson.model.Item.Read:thu')
-    //         permission('hudson.model.Item.Cancel:thu')
-    //     }
-    }
+    // static Closure authorizationMatrix (String personNames) {
+    //     // Implement a each loop to do this for a list of names
+    //         //     project / 'properties' / 'hudson.security.AuthorizationMatrixProperty' {
+    // //         permission('hudson.model.Item.Build:thu')
+    // //         permission('hudson.model.Item.Workspace:thu')
+    // //         permission('hudson.model.Item.Discover:thu')
+    // //         permission('hudson.model.Item.Read:thu')
+    // //         permission('hudson.model.Item.Cancel:thu')
+    // //     }
+    // }
 }
