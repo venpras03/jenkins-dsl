@@ -101,10 +101,10 @@ class JobHelper {
 
     }
 
-    static Closure artifactArchiver(String artifacts) {
+    static Closure artifactArchiver(String artifactsvalue) {
         return {
             it / 'publishers' << 'hudson.tasks.ArtifactArchiver' {
-                'artifacts' (artifacts)
+                'artifacts' (artifactsvalue)
                 'latestOnly'('false')
                 'allowEmptyArchive'('false')
             }

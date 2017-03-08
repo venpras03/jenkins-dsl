@@ -8,7 +8,7 @@ job('idod-adapter') {
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ("build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*")
+    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
     configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
     configure gradleSetup ()
