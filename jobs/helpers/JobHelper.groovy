@@ -1,15 +1,24 @@
 package helpers
 
 class JobHelper {
-    static Closure gerritConfigurations(String value) {
+    
+    def plugin_git_version;
+    def plugin_gerrit_trigger_version;
+
+    JobHelper () {
+        plugin_git_version = 'git@2.2.12'
+        plugin_gerrit_trigger_version = 'gerrit-trigger@2.22.0'
+    }
+
+    static Closure gerritConfigurations(String gerritrepo) {
         return {
-            it / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:'git@2.2.12') << {
+            it / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:plugin_git_version) << {
                 'configVersion' ('2')
                 'userRemoteConfigs' {
                     'hudson.plugins.git.UserRemoteConfig' {
                         'refspec' ('$GERRIT_REFSPEC')
-                        'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/idod/extras/adapter')
-                        'credentialsId' (value)
+                        'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/$gerritrepo')
+                        'credentialsId' ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                     }
                 }
 
@@ -22,7 +31,8 @@ class JobHelper {
                 'submoduleCfg' (class:"list")
                 'extensions' {
                     'hudson.plugins.git.extensions.impl.BuildChooserSetting' {
-                        'buildChooser' (class:"com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser", plugin:"gerrit-trigger@2.11.0"){                  
+                        'buildChooser' (class:"com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser", \
+                                                                                    plugin:plugin_gerrit_trigger_version){                  
                             'separator' ('#')
                         }
                     }
@@ -47,7 +57,8 @@ class JobHelper {
 
     static Closure gerritTrigger (String gerritrepo) {
         return {
-            it / 'triggers' <<'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' (plugin:"gerrit-trigger@2.22.0") {     
+            it / 'triggers' <<'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' \
+                                                                        (plugin:plugin_gerrit_trigger_version) {     
                 'spec' ''
                 'gerritProjects' {
                     'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject' {
@@ -90,10 +101,10 @@ class JobHelper {
 
     }
 
-    static Closure artifactArchiver(String quietPeriodvalue, String canRoamValue) {
+    static Closure artifactArchiver(String artifacts, String canRoamValue) {
         return {
             it / 'publishers' << 'hudson.tasks.ArtifactArchiver' {
-                'artifacts' ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+                'artifacts' (artifacts)
                 'latestOnly'('false')
                 'allowEmptyArchive'('false')
             }
@@ -113,12 +124,15 @@ class JobHelper {
 
 
 
-    static Closure otherConfigurations(String quietPeriodvalue, String canRoamValue) {
+    static Closure otherConfigurations(String quietPeriodvalue, String canRoamValue, String assignedNode) {
         return {
             it / {
                 'quietPeriod' (quietPeriodvalue)
                 'canRoam' (canRoamValue)
                 'disabled' ('false')
+                'keepDependencies' ('false')
+                'concurrentBuild' ('true')
+                'assignedNode' (assignedNode)                 
             }
         }
     }    

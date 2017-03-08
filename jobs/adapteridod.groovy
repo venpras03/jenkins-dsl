@@ -2,11 +2,14 @@
 import static helpers.JobHelper.*
 
 job('idod-adapter') {
+    def gerritrepo = 'idod/extras/adapter'
     description 'Build and test the app.'
-
     jdk ('jdk8')
-
     configure gerritParameters ('refs/head/master')
-    configure gerritConfigurations('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
-    configure gerritTrigger ('idod/extras/adapter')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+    configure artifactFingerprinter ()
+    configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
+    configure gradleSetup ()
 }
