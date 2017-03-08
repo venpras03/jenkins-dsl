@@ -101,7 +101,7 @@ class JobHelper {
 
     }
 
-    static Closure artifactArchiver(String artifacts, String canRoamValue) {
+    static Closure artifactArchiver(String artifacts) {
         return {
             it / 'publishers' << 'hudson.tasks.ArtifactArchiver' {
                 'artifacts' (artifacts)
