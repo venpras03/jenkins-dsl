@@ -137,15 +137,15 @@ class JobHelper {
         }
     }    
 
-    static Closure gradleSetup () {
+    static Closure gradleSetup (String tasks) {
         return {
             it / {        
                 'steps' {
                     'gradle' {
-                        'useWrapper' 'true'
-                        'makeExecutable' 'false'
-                        'fromRootBuildScriptDir' 'false'
-                        'tasks' 'build'
+                        'useWrapper' ('true')
+                        'makeExecutable' ('false')
+                        'fromRootBuildScriptDir' ('false')
+                        'tasks' (tasks)
                     }
                 }
             }
