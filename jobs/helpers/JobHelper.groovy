@@ -139,6 +139,7 @@ class JobHelper {
 
     static Closure gradleSetup (String tasks) {
         return {
+            it / {
             'steps' {
                 'gradle' {
                     'useWrapper' ('true')
@@ -147,6 +148,7 @@ class JobHelper {
                     'tasks' (tasks)
                 }
             }
+        }
         }
     }
 
