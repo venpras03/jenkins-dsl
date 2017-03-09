@@ -11,5 +11,5 @@ job('idod-adapter') {
     configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
     // configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
-    configure gradleSetup ('build')
+    gradleSetup ('build')
 }
