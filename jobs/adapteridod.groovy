@@ -15,10 +15,10 @@ job('idod-adapter') {
 
     steps {
         gradle {
-            useWrapper ('true')
-            makeExecutable ('false')
-            fromRootBuildScriptDir ('false')
-            tasks ('build')
+            useWrapper 'true'
+            makeExecutable 'false'
+            fromRootBuildScriptDir 'false'
+            tasks 'build'
         }
     }
 }
