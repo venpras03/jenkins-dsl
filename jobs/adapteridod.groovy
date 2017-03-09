@@ -12,4 +12,13 @@ job('idod-adapter') {
     configure artifactFingerprinter ()
     // configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
     gradleSetup ('build')
+
+    steps {
+        gradle {
+            useWrapper ('true')
+            makeExecutable ('false')
+            fromRootBuildScriptDir ('false')
+            tasks ('build')
+        }
+    }
 }
