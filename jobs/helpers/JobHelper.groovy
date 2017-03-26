@@ -142,10 +142,10 @@ class JobHelper {
             it / {
             'steps' {
                 'gradle' {
-                    'useWrapper' ('true')
-                    'makeExecutable' ('false')
-                    'fromRootBuildScriptDir' ('false')
-                    'tasks' (tasks)
+                    'useWrapper' 'true'
+                    'makeExecutable' 'false'
+                    'fromRootBuildScriptDir' 'false'
+                    'tasks' tasks
                 }
             }
         }
