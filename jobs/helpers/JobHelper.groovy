@@ -139,18 +139,16 @@ class JobHelper {
 
     static Closure gradleSetup (String tasks) {
         return {
-            it / {            
-            'steps' {
-                'gradle' {
-                    'useWrapper' 'true'
-                    'makeExecutable' 'false'
-                    'fromRootBuildScriptDir' 'false'
-                    'tasks' tasks
-                }
+            it /  'builders' << 'hudson.plugins.gradle.Gradle' {
+                'tasks' tasks
+                'makeExecutable' 'false'
+                'fromRootBuildScriptDir' 'false'            
+                'useWrapper' 'true'
             }
         }
-        }
     }
+
+
 
     // static Closure authorizationMatrix (String personNames) {
     //     // Implement a each loop to do this for a list of names
