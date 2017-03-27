@@ -8,6 +8,7 @@ class JobHelper {
     JobHelper () {
         plugin_git_version = 'git@2.2.12'
         plugin_gerrit_trigger_version = 'gerrit-trigger@2.22.0'
+        plugin_ms_build_version = 'msbuild@1.16'
     }
 
     static logRotation = {daysToKeep,  numToKeep,  artifactDaysToKeep,  artifactNumToKeep ->
@@ -158,6 +159,19 @@ class JobHelper {
             }
         }
     }
+
+    static Closure windowsComponent ()
+    {
+        return {
+            it / 'builders' << 'hudson.plugins.msbuild.MsBuildBuilder' (plugin:plugin_ms_build_version) {
+            'msBuildName' ('MSBuild35')
+            'msBuildFile' ('idondemandSoftCertTool.sln')
+            'cmdLineArgs' ('/p:Configuration=Release /t:Clean;Rebuild')
+            'buildVariablesAsProperties' ('true')
+            'continueOnBuildFailure' ('false')
+            }
+        }
+    }    
 
 
 
