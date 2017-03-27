@@ -11,13 +11,13 @@ class JobHelper {
         plugin_ms_build_version = 'msbuild@1.16'
     }
 
-    static logRotation = {daysToKeep,  numToKeep,  artifactDaysToKeep,  artifactNumToKeep ->
+    static Closure logRotation (String[] configValue) {
         return {        
             it / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
-                'daysToKeep' (${daysToKeep})
-                'numToKeep' (numToKeep)
-                'artifactDaysToKeep' (artifactDaysToKeep)
-                'artifactNumToKeep' (artifactNumToKeep)
+                'daysToKeep' (${configValue[0]})
+                'numToKeep' (${configValue[1]})
+                'artifactDaysToKeep' (${configValue[2]})
+                'artifactNumToKeep' (${configValue[3]})
             }   
         }     
     }
