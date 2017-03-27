@@ -10,11 +10,11 @@ class JobHelper {
         plugin_gerrit_trigger_version = 'gerrit-trigger@2.22.0'
     }
 
-    static Closure logRotation (String daysToKeep, String numToKeep, String artifactDaysToKeep, String artifactNumToKeep)
+    static Closure logRotation ( daysToKeep,  numToKeep,  artifactDaysToKeep,  artifactNumToKeep)
     {
         return {        
             it / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
-                'daysToKeep' (daysToKeep)
+                'daysToKeep' (${daysToKeep})
                 'numToKeep' (numToKeep)
                 'artifactDaysToKeep' (artifactDaysToKeep)
                 'artifactNumToKeep' (artifactNumToKeep)
