@@ -1,7 +1,7 @@
 package helpers
 
 class JobHelper {
-    
+    def plugin_ms_build_version;
     def plugin_git_version;
     def plugin_gerrit_trigger_version;
 
