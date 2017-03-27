@@ -143,7 +143,7 @@ class JobHelper {
 
     static Closure otherConfigurations(String configValue) {
         return {
-            it / {
+            it / 'properties' << {
                 'quietPeriod' (configValue)
                 //'canRoam' (${configValue[1]})
                 'disabled' ('false')
