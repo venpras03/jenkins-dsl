@@ -141,11 +141,11 @@ class JobHelper {
 
 
 
-    static Closure otherConfigurations(String configValue) {
+    static Closure otherConfigurations(String[] configValue) {
         return {
             it / 'properties' << {
-                'quietPeriod' (configValue)
-                //'canRoam' (${configValue[1]})
+                'quietPeriod' (${configValue[0]})
+                'canRoam' (${configValue[1]})
                 'disabled' ('false')
                 'keepDependencies' ('false')
                 'concurrentBuild' ('true')
