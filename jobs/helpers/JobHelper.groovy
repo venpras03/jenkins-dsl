@@ -32,7 +32,7 @@ class JobHelper {
                         'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/${gerritrepo}')
                         'credentialsId' ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                     }
-                }
+                }           
 
                 'branches' {
                     'hudson.plugins.git.BranchSpec' {
@@ -144,12 +144,12 @@ class JobHelper {
     static Closure otherConfigurations(String quietPeriodvalue, String canRoamValue, String assignedNode) {
         return {
             it / {
-                'quietPeriod' (quietPeriodvalue)
-                'canRoam' (canRoamValue)
+                'quietPeriod' (${quietPeriodvalue})
+                'canRoam' (${canRoamValue})
                 'disabled' ('false')
                 'keepDependencies' ('false')
                 'concurrentBuild' ('true')
-                'assignedNode' (assignedNode)                 
+                'assignedNode' (${assignedNode})                 
             }
         }
     }    
