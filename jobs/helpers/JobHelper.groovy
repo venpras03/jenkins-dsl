@@ -29,7 +29,7 @@ class JobHelper {
                 'userRemoteConfigs' {
                     'hudson.plugins.git.UserRemoteConfig' {
                         'refspec' ('$GERRIT_REFSPEC')
-                        'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/$gerritrepo')
+                        'url' ('ssh://idondemandhudson@git.dev.identv.com:29418/${gerritrepo}')
                         'credentialsId' ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                     }
                 }
@@ -102,7 +102,12 @@ class JobHelper {
                 'customUrl'()
                 'serverName'('git.dev.identiv.com')
                     'triggerOnEvents' {
-                    'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent' {}
+                        if (eventType == "changemerged")
+                        {
+                            'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent' {}
+                        } else {
+                            'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent' {}
+                        }
                 }
                 'allowTriggeringUnreviewedPatches'('false')
                 'dynamicTriggerConfiguration'('false')
