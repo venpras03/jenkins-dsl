@@ -141,7 +141,7 @@ class JobHelper {
 
 
 
-    static Closure otherConfigurations(String quietPeriodvalue, String canRoamValue, String assignedNode) {
+    static Closure otherConfigurations(quietPeriodvalue,  canRoamValue,  assignedNode) {
         return {
             it / {
                 'quietPeriod' (${quietPeriodvalue})
