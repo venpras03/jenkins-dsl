@@ -27,7 +27,7 @@ job('api-tool-publish') {
     def gerritrepo = 'idod/extras/adapter'
     description 'Build and test the app.'
     jdk ('jdk8')
-    configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
