@@ -14,10 +14,10 @@ class JobHelper {
     static Closure logRotation (String[] configValue) {
         return {        
             it / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
-                'daysToKeep' (${configValue[0]})
-                'numToKeep' (${configValue[1]})
-                'artifactDaysToKeep' (${configValue[2]})
-                'artifactNumToKeep' (${configValue[3]})
+                'daysToKeep' (configValue[0])
+                'numToKeep' (configValue[1])
+                'artifactDaysToKeep' (configValue[2])
+                'artifactNumToKeep' (configValue[3])
             }   
         }     
     }

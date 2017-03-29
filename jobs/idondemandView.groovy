@@ -6,7 +6,8 @@ job('idod-adapter') {
     String[] configVal = ['14', '40', '7', '20'] 
     description 'Build and test the app.'
     jdk ('jdk8')
-    //configure logRotation (['14', '40', '7', '20'] as String[]) // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep    
+    //configure logRotation (['14', '40', '7', '20'] as String[]) // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    configure logRotation (configVal)   
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
@@ -15,15 +16,15 @@ job('idod-adapter') {
     //configure otherConfigurations ('40', 'false') // quietPeriod, canRoam, machine
     //configure gradleSetup ('build')
 
-    configure { project ->
+    // configure { project ->
 
-        project / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
-            daysToKeep(configVal[0])
-            numToKeep(configVal[1])
-            artifactDaysToKeep(configVal[2])
-            artifactNumToKeep(configVal[3])
-        }
-    }
+    //     project / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
+    //         daysToKeep(configVal[0])
+    //         numToKeep(configVal[1])
+    //         artifactDaysToKeep(configVal[2])
+    //         artifactNumToKeep(configVal[3])
+    //     }
+    // }
 
     steps {
         gradle {
