@@ -3,18 +3,20 @@ import static helpers.JobHelper.*
 
 job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
+    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'true', 'windows'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build'] // tasks
+
     
     jdk ('jdk8')
     configure logRotation (logConfigs)   
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations (otherConfigs)
+    configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
 }
 
@@ -22,41 +24,42 @@ job('idod-adapter') {
 
 job('api-tool-publish') {
     def gerritrepo = 'its/contrib/softcert-tool'
-    description 'api-tool-publish'
+    def artifacts = 'build/exe/*,build/installer/*,build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
     jdk ('default')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/exe/*,build/installer/*,build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
-    //configure gradleSetup ('build')
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
     configure windowsComponent ()
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'build'
-        }
-    }
 }
 
 //------------------------------------------------- API-TOOL-VERIFY ----------------------------------------//
 
 job('api-tool-verify') {
     def gerritrepo = 'its/contrib/softcert-tool'
-    description 'api-tool-verify'
+    def artifacts = 'build/exe/*,build/installer/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
     jdk ('default')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/exe/*,build/installer/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
     configure windowsComponent ()
-    //configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
     
 }
 
@@ -64,100 +67,80 @@ job('api-tool-verify') {
 
 job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
-    description 'idod-adapter'
+    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
     jdk ('jdk8')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
-
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'build'
-        }
-    }    
-    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
 }
 
 //------------------------------------------- IDOD-ADAPTER-PUBLISH ---------------------------------------------------//
 
 job('idod-adapter-publish') {
     def gerritrepo = 'idod/extras/adapter'
-    description 'idod-adapter'
+    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
     jdk ('jdk8')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
-
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'build'
-        }
-    }    
-    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
 }
 
 //------------------------------------------- IDOD-UTIL-VERIFY ---------------------------------------------------//
 
 job('idod-util-verify') {
     def gerritrepo = 'idod/java/util'
-    description 'idod-util-verify'
+    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
     jdk ('linux-jdk8')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false', 'windows') // quietPeriod, canRoam
-
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'clean build --refresh-dependencies --no-daemon'
-        }
-    }    
-    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)  
 }
 
 //------------------------------------------- IDONDEMAND-CORE-RELEASE-JDK8---------------------------------------------------//
 
 job('idondemand-core-release-jdk8') {
     def gerritrepo = 'idod/core'
-    description 'idondemand-core-release-jdk8'
+    def artifacts = '**/build/libs/*,**/build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+    
     jdk ('linux-jdk8')
-    //configure logRotation ('-1', '10', '7', '20') // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep
+    configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
-    configure artifactArchiver ('**/build/libs/*,**/build/distributions/*')
+    configure artifactArchiver (artifacts)
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false', 'linux') // quietPeriod, canRoam
-
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'clean idondemandpackage:buildRpms'
-        }
-    }    
-    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs) 
 }
 
 
