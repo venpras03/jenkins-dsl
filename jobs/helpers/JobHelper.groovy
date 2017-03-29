@@ -4,11 +4,13 @@ class JobHelper {
     def plugin_ms_build_version;
     def plugin_git_version;
     def plugin_gerrit_trigger_version;
+    def plugin_gradle_version;
 
     JobHelper () {
         plugin_git_version = 'git@2.2.12'
         plugin_gerrit_trigger_version = 'gerrit-trigger@2.22.0'
         plugin_ms_build_version = 'msbuild@1.16'
+        plugin_gradle_version = "gradle@1.26"
     }
 
     static Closure logRotation (String[] configValue) {
@@ -154,13 +156,17 @@ class JobHelper {
         }
     }    
 
-    static Closure gradleSetup (String tasks) {
+    static Closure gradleConfigurations(String[] gradleConfigs) {
         return {
-            it /  'builders' << 'hudson.plugins.gradle.Gradle' {
-                'tasks' tasks
-                'makeExecutable' 'false'
-                'fromRootBuildScriptDir' 'false'            
-                'useWrapper' 'true'
+            it / 'builders' << 'hudson.plugins.gradle.Gradle' (plugin:plugin_gradle_version) {
+                'switches' ('--refresh-dependencies')
+                'tasks' (gradleConfigs[0])
+                'rootBuildScriptDir' ''
+                'buildFile' ''
+                'useWrapper' ('true')
+                'makeExecutable' ('true')
+                'fromRootBuildScriptDir' ('false')
+                'useWorkspaceAsHome' ('false')
             }
         }
     }

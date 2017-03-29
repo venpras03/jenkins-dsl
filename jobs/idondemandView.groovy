@@ -5,6 +5,7 @@ job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'true', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
     
     jdk ('jdk8')
     configure logRotation (logConfigs)   
@@ -14,7 +15,7 @@ job('idod-adapter') {
     configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
     //configure otherConfigurations (otherConfigs)
-    configure gradleSetup ('build')
+    configure gradleConfigurations (gradleConfigs)
 }
 
 //------------------------------------------------- API-TOOL-PUBLISH ----------------------------------------//
