@@ -5,7 +5,7 @@ job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    description 'Build and test the app.'
+    
     jdk ('jdk8')
     configure logRotation (logConfigs)   
     configure gerritParameters ('refs/head/master')
