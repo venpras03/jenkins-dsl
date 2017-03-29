@@ -171,7 +171,7 @@ class JobHelper {
         }
     }
 
-    static Closure executeShell (String command)
+    static Closure executeShell (def command)
     {
         return {
             it / 'builders' << 'hudson.tasks.Shell' {
