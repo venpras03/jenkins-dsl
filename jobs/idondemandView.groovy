@@ -127,7 +127,7 @@ job('idondemand-core-release-jdk8') {
 
 job('iwc-verify') {
     def gerritrepo = 'idod/webcontrols/core'
-    def commandShell = '''git clean -fdx && git reset --hard HEAD
+    String commandShell = '''git clean -fdx && git reset --hard HEAD
                         echo WIX_ROOT_DIR: $WIX_ROOT_DIR'''
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
