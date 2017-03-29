@@ -20,10 +20,10 @@ job('idod-adapter') {
 
         project << {
             quietPeriod (otherConfigs[0])
-            canRoam (otherConfigs[1])
+            canRoam ('false')
             disabled ('false')
             keepDependencies ('false')
-            assignedNode(otherConfigs[2])
+            assignedNode('windows')
             concurrentBuild ('true')
         }
     }    
