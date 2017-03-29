@@ -13,29 +13,8 @@ job('idod-adapter') {
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
-    //configure otherConfigurations (otherConfigs)
-    //configure gradleSetup ('build')
-
-    configure { project ->
-
-        project << {
-            quietPeriod (otherConfigs[0])
-            canRoam ('false')
-            disabled ('false')
-            keepDependencies ('false')
-            assignedNode('windows')
-            concurrentBuild ('true')
-        }
-    }    
-
-    steps {
-        gradle {
-            useWrapper true
-            makeExecutable false
-            fromRootBuildScriptDir false
-            tasks 'build'
-        }
-    }
+    configure otherConfigurations (otherConfigs)
+    configure gradleSetup ('build')
 }
 
 //------------------------------------------------- API-TOOL-PUBLISH ----------------------------------------//
