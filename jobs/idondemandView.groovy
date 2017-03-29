@@ -3,28 +3,18 @@ import static helpers.JobHelper.*
 
 job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
-    String[] configVal = ['14', '40', '7', '20'] 
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
     description 'Build and test the app.'
     jdk ('jdk8')
-    //configure logRotation (['14', '40', '7', '20'] as String[]) // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    configure logRotation (configVal)   
+    configure logRotation (logConfigs)   
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
-    //configure otherConfigurations ('40', 'false') // quietPeriod, canRoam, machine
+    configure otherConfigurations (otherConfigs)
     //configure gradleSetup ('build')
-
-    // configure { project ->
-
-    //     project / 'logRotator' (class:"hudson.tasks.LogRotator") <<  {
-    //         daysToKeep(configVal[0])
-    //         numToKeep(configVal[1])
-    //         artifactDaysToKeep(configVal[2])
-    //         artifactNumToKeep(configVal[3])
-    //     }
-    // }
 
     steps {
         gradle {

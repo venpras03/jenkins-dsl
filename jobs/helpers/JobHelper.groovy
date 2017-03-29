@@ -144,12 +144,12 @@ class JobHelper {
     static Closure otherConfigurations(String[] configValue) {
         return {
             it / 'properties' << {
-                'quietPeriod' (${configValue[0]})
-                'canRoam' (${configValue[1]})
+                'quietPeriod' (configValue[0])
+                'canRoam' (configValue[1])
                 'disabled' ('false')
                 'keepDependencies' ('false')
                 'concurrentBuild' ('true')
-                //'assignedNode' (${configValue[3]})          
+                'assignedNode' (configValue[3])          
             }
         }
     }    
