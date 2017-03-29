@@ -139,9 +139,9 @@ job('iwc-verify') {
     configure gerritTrigger (gerritrepo)
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs) 
-    configure executeShell ("""git clean -fdx && git reset --hard HEAD
-                            echo WIX_ROOT_DIR: \$WIX_ROOT_DIR
-                            """)
+    configure executeShell ('''$/git clean -fdx && git reset --hard HEAD
+                            echo WIX_ROOT_DIR: $$WIX_ROOT_DIR
+                            /$''')
 
     configure {project ->
             project / publishers << 'com.chikli.hudson.plugin.naginator.NaginatorPublisher' (plugin:"naginator@1.9") {
