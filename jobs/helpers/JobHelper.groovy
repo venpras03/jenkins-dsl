@@ -149,7 +149,7 @@ class JobHelper {
                 'disabled' ('false')
                 'keepDependencies' ('false')
                 'concurrentBuild' ('true')
-                'assignedNode' (configValue[3])          
+                'assignedNode' (configValue[2])          
             }
         }
     }    
