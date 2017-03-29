@@ -4,7 +4,7 @@ import static helpers.JobHelper.*
 job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'true', 'windows'] // quietPeriod, canRoam, machine
     
     jdk ('jdk8')
     configure logRotation (logConfigs)   
