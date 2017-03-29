@@ -123,6 +123,40 @@ job('idondemand-core-release-jdk8') {
     configure gradleConfigurations (gradleConfigs) 
 }
 
+//------------------------------------------- IDONDEMAND-WEBCONTROLS-CORE-VERIFY---------------------------------------------------//
+
+job('iwc-verify') {
+    def gerritrepo = 'idod/webcontrols/core'
+    def commandShell = 'git clean -fdx && git reset --hard HEAD
+                        echo WIX_ROOT_DIR: $WIX_ROOT_DIR'
+    String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build', '-g e:/gradle --stacktrace --refresh-dependencies'] // tasks
+
+
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs) 
+    configure executeShell (commandShell)
+
+    configure {project ->
+            project / publishers << 'com.chikli.hudson.plugin.naginator.NaginatorPublisher' (plugin:"naginator@1.9") {
+            'regexpForRerun' ''
+            'rerunIfUnstable' 'false'
+            'checkRegexp' 'false'
+            'delay' (class:"com.chikli.hudson.plugin.naginator.FixedDelay") {
+                'delay' '300'
+            }
+            'maxSchedule' '1'
+        }
+    }   
+}
+
+
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
 
 job('app-intc-deploy') {

@@ -159,8 +159,8 @@ class JobHelper {
     static Closure gradleConfigurations(String[] gradleConfigs) {
         return {
             it / 'builders' << 'hudson.plugins.gradle.Gradle' (plugin:plugin_gradle_version) {
-                'switches' ('--refresh-dependencies')
                 'tasks' (gradleConfigs[0])
+                'switches' (gradleConfigs[1])                
                 'rootBuildScriptDir' ''
                 'buildFile' ''
                 'useWrapper' ('true')
@@ -168,6 +168,15 @@ class JobHelper {
                 'fromRootBuildScriptDir' ('false')
                 'useWorkspaceAsHome' ('false')
             }
+        }
+    }
+
+    static Closure executeShell (String command)
+    {
+        return {
+            it / 'builders' << 'hudson.tasks.Shell' {
+                'command' (command)
+            }            
         }
     }
 
