@@ -175,7 +175,7 @@ class JobHelper {
     {
         return {
             it / 'builders' << 'hudson.tasks.Shell' {
-                'command' (command)
+                'command' command
             }            
         }
     }
