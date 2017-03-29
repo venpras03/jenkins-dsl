@@ -63,26 +63,6 @@ job('api-tool-verify') {
     
 }
 
-//------------------------------------------- IDOD-ADAPTER ---------------------------------------------------//
-
-job('idod-adapter') {
-    def gerritrepo = 'idod/extras/adapter'
-    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
-    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
-
-    jdk ('jdk8')
-    configure logRotation (logConfigs)
-    configure gerritParameters ('refs/head/master')
-    configure gerritConfigurations(gerritrepo)
-    configure gerritTrigger (gerritrepo)
-    configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
-    configure otherConfigurations (otherConfigs)
-    configure gradleConfigurations (gradleConfigs)
-}
-
 //------------------------------------------- IDOD-ADAPTER-PUBLISH ---------------------------------------------------//
 
 job('idod-adapter-publish') {
@@ -131,7 +111,7 @@ job('idondemand-core-release-jdk8') {
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build'] // tasks
-    
+
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
@@ -143,5 +123,24 @@ job('idondemand-core-release-jdk8') {
     configure gradleConfigurations (gradleConfigs) 
 }
 
+//------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
+
+job('app-intc-deploy') {
+    def gerritrepo = '  idod/chef/instances/int'
+    def artifacts = '**/build/libs/*,**/build/distributions/*'
+    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build'] // tasks
+
+    jdk ('linux-jdk8')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/intc')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)
+    configure artifactFingerprinter ()
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs) 
+}
 
 
