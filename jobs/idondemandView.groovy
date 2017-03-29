@@ -5,13 +5,13 @@ job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     description 'Build and test the app.'
     jdk ('jdk8')
-    configure logRotation (['14', '40', '7', '20'] as String[]) // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep    
+    //configure logRotation (['14', '40', '7', '20'] as String[]) // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep    
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver ('build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*')
     configure artifactFingerprinter ()
-    configure otherConfigurations ('40', 'false') // quietPeriod, canRoam, machine
+    //configure otherConfigurations ('40', 'false') // quietPeriod, canRoam, machine
     //configure gradleSetup ('build')
 
     steps {
