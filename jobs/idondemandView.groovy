@@ -6,7 +6,7 @@ job('idod-adapter') {
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'true', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     
     jdk ('jdk8')
@@ -27,7 +27,7 @@ job('api-tool-publish') {
     def artifacts = 'build/exe/*,build/installer/*,build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('default')
     configure logRotation (logConfigs)
@@ -48,7 +48,7 @@ job('api-tool-verify') {
     def artifacts = 'build/exe/*,build/installer/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('default')
     configure logRotation (logConfigs)
@@ -70,7 +70,7 @@ job('idod-adapter-publish') {
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('jdk8')
     configure logRotation (logConfigs)
@@ -90,7 +90,7 @@ job('idod-util-verify') {
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
@@ -110,7 +110,7 @@ job('idondemand-core-release-jdk8') {
     def artifacts = '**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
@@ -164,7 +164,7 @@ job('app-intc-deploy') {
     def artifacts = '**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build'] // tasks
+    String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
