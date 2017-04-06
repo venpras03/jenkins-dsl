@@ -210,7 +210,7 @@ job('iwc-publish') {
     String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = "iwli-publish, iws-publish, iwue-publish"
 
-    jdk ('default')
+    jdk ('jkd6')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -224,6 +224,23 @@ job('iwc-publish') {
  
 }
 
+//------------------------------- IDONDEMAND-WEBCONTROLS-LOCAL-ISSUANCE-VERIFY --------------------------------------------------//
+
+job('iwli-verify') {
+    def gerritrepo = 'idod/webcontrols/local-issuance'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
+    
+    jdk ('jdk6')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+}
+
 //------------------------------- IDONDEMAND-WEBCONTROLS-LOCAL-ISSUANCE-PUBLISH --------------------------------------------------//
 
 job('iwli-publish') {
@@ -233,7 +250,7 @@ job('iwli-publish') {
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = 'idondemand-core-release-jdk8'
-    
+
     jdk ('default')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
