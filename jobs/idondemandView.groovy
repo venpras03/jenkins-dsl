@@ -179,6 +179,7 @@ job('iwc-verify') {
 
 
     jdk ('default')
+    displayName ('idOnDemand Webcontrols Core [Verify]')    
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -211,6 +212,7 @@ job('iwc-publish') {
     String otherprojects = "iwli-publish, iws-publish, iwue-publish"
 
     jdk ('jkd6')
+    displayName ('idOnDemand Webcontrols Core [Publish]')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -233,6 +235,7 @@ job('iwli-verify') {
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
     
     jdk ('jdk6')
+    displayName ('idOnDemand Webcontrols Local Issuance [Verify]')      
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -252,6 +255,7 @@ job('iwli-publish') {
     String otherprojects = 'idondemand-core-release-jdk8'
 
     jdk ('default')
+    displayName ('idOnDemand Webcontrols Local Issuance [Publish]')    
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -275,6 +279,7 @@ job('iws-verify') {
     String otherprojects = 'iwli-publish'
 
     jdk ('default')
+    displayName ('idOnDemand Webcontrols Smartcard [Verify]')    
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -298,6 +303,7 @@ job('iws-publish') {
     String otherprojects = 'iwli-publish'
 
     jdk ('default')
+    displayName ('idOnDemand Webcontrols Smartcard [Publish]') 
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -320,6 +326,7 @@ job('iwue-verify') {
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
 
     jdk ('jdk6')
+    displayName ('idOnDemand Webcontrols User Enrollment [Verify]')    
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -339,7 +346,7 @@ job('iwue-publish') {
     String[] gradleConfigs = ['clean build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment -p idod-webcontrols'] // tasks
 
     jdk ('default')
-    displayName ('HHHHHHH')
+    displayName ('idOnDemand Webcontrols User Enrollment [Publish]')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
