@@ -139,6 +139,7 @@ job('idod-core-verify-jdk8') {
     String testReportPath = "**/build/test-results/*.xml"
 
     jdk ('linux-jdk8')
+    displayName ('idOnDemand Core [JDK8/Verify]')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -159,6 +160,7 @@ job('idondemand-core-release-jdk8') {
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
+    displayName ('idOnDemand Core [JDK8/Release]')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
