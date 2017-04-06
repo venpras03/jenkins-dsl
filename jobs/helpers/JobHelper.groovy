@@ -136,7 +136,6 @@ class JobHelper {
             it / 'publishers' << 'hudson.tasks.Fingerprinter' {
                 'targets' (fingerprintFile) 
                 'recordBuildArtifacts'('true')
-                }
             }
         }
     }
