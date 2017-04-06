@@ -228,7 +228,7 @@ job('iwc-publish') {
 
 job('iwli-verify') {
     def gerritrepo = 'idod/webcontrols/local-issuance'
-    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] logConfigs = ['14', '40', '-1', '-1']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
     
@@ -269,7 +269,7 @@ job('iwli-publish') {
 job('iws-verify') {
     def gerritrepo = 'idod/webcontrols/smartcard'
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
-    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['clean build', '-g e:/gradle --stacktrace --refresh-dependencies'] // tasks
     String otherprojects = 'iwli-publish'
@@ -310,6 +310,43 @@ job('iws-publish') {
  
 }
 
+//------------------------------- IDONDEMAND-WEBCONTROLS-USER-ENROLLMENT-VERIFY--------------------------------------------------//
+
+job('iwue-verify') {
+    def gerritrepo = 'idod/webcontrols/user-enrollment'
+    def artifacts = 'idod-webcontrols/Release/*.dll,idod-webcontrols/target/classes/main/webcontrols/*.msi'
+    String[] logConfigs = ['14', '40', '-1', '-1']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
+
+    jdk ('jdk6')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+}
+
+//------------------------------- IDONDEMAND-WEBCONTROLS-USER-ENROLLMENT-PUBLISH--------------------------------------------------//
+
+job('iwue-publish') {
+    def gerritrepo = 'idod/webcontrols/user-enrollment'
+    def artifacts = 'idod-webcontrols/Release/*.dll,idod-webcontrols/target/classes/main/webcontrols/*.msi'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment -p idod-webcontrols'] // tasks
+
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+}
 
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
 
