@@ -263,6 +263,54 @@ job('iwli-publish') {
     configure artifactFingerprinter ('')    
  
 }
+
+//------------------------------- IDONDEMAND-WEBCONTROLS-SMARTCARD-VERIFY--------------------------------------------------//
+
+job('iws-verify') {
+    def gerritrepo = 'idod/webcontrols/smartcard'
+    def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build', '-g e:/gradle --stacktrace --refresh-dependencies'] // tasks
+    String otherprojects = 'iwli-publish'
+
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+    configure buildOtherProjects (otherprojects)    
+    configure artifactFingerprinter ('')    
+ 
+}
+
+//------------------------------- IDONDEMAND-WEBCONTROLS-SMARTCARD-PUBLISH--------------------------------------------------//
+
+job('iws-publish') {
+    def gerritrepo = 'idod/webcontrols/smartcard'
+    def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String otherprojects = 'iwli-publish'
+
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+    configure buildOtherProjects (otherprojects)    
+    configure artifactFingerprinter ('')    
+ 
+}
+
+
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
 
 job('app-intc-deploy') {
