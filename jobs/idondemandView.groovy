@@ -158,7 +158,6 @@ job('idondemand-core-release-jdk8') {
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
-    name ('idod-core-release-jdk8')
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
