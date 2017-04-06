@@ -224,6 +224,28 @@ job('iwc-publish') {
  
 }
 
+//------------------------------- IDONDEMAND-WEBCONTROLS-LOCAL-ISSUANCE-PUBLISH --------------------------------------------------//
+
+job('iwli-publish') {
+    def gerritrepo = 'idod/webcontrols/local-issuance'
+    def artifacts = 'idod-printctrl/Release/*.dll,idod-printctrl/target/classes/main/printctrl/*.msi'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String otherprojects = 'idondemand-core-release-jdk8'
+    
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+    configure buildOtherProjects (otherprojects)    
+    configure artifactFingerprinter ('')    
+ 
+}
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
 
 job('app-intc-deploy') {
