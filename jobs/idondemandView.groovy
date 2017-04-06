@@ -88,7 +88,7 @@ job('idod-adapter-publish') {
 job('idod-util-verify') {
     def gerritrepo = 'idod/java/util'
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
-    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
@@ -102,6 +102,27 @@ job('idod-util-verify') {
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)  
 }
+
+//------------------------------------------- IDOD-UTIL-PUBLISH ---------------------------------------------------//
+
+job('idod-util-publish  ') {
+    def gerritrepo = 'idod/java/util'
+    def artifacts = '**/build/libs/*'
+    String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build upload', '--refresh-dependencies'] // tasks, switches
+
+    jdk ('linux-jdk8')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)
+    configure artifactFingerprinter ()
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)  
+}
+
 
 //------------------------------------------- IDONDEMAND-CORE-RELEASE-JDK8---------------------------------------------------//
 
@@ -139,7 +160,7 @@ job('iwc-verify') {
     configure gerritTrigger (gerritrepo)
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs) 
-    configure executeShell ("""git clean -fdx && git reset --hard HEAD echo WIX_ROOT_DIR: \$WIX_ROOT_DIR""")
+    //configure executeShell ("""git clean -fdx && git reset --hard HEAD echo WIX_ROOT_DIR: \$WIX_ROOT_DIR""")
 
     configure {project ->
             project / publishers << 'com.chikli.hudson.plugin.naginator.NaginatorPublisher' (plugin:"naginator@1.9") {
@@ -153,6 +174,7 @@ job('iwc-verify') {
         }
     }   
 }
+
 
 
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
