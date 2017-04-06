@@ -87,7 +87,7 @@ job('idod-adapter-publish') {
 
 job('idod-util-verify') {
     def gerritrepo = 'idod/java/util'
-    def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
+    def artifacts = '**/build/test-results/test/*.xml'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['clean build', '--refresh-dependencies --no_daemon'] // tasks, switches
@@ -128,13 +128,32 @@ job('idod-util-publish  ') {
     configure testReportJUnit (testReportPath)
 }
 
+//------------------------------------------- IDONDEMAND-CORE-VERIFY-JDK8 ---------------------------------------------------//
+
+job('idod-core-verify-jdk8') {
+    def gerritrepo = 'idod/core'
+    def artifacts = '**/build/test-results/test/*.xml'
+    String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['clean build buildRpms', '--refresh-dependencies -Pidod.integrate -Poracle  --stacktrace --no-daemon'] // tasks, switches
+
+    jdk ('linux-jdk8')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)  
+    configure testReportJUnit (testReportPath)    
+}
 
 //------------------------------------------- IDONDEMAND-CORE-RELEASE-JDK8---------------------------------------------------//
 
 job('idondemand-core-release-jdk8') {
     def gerritrepo = 'idod/core'
     def artifacts = '**/build/libs/*,**/build/distributions/*'
-    String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
