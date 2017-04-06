@@ -15,7 +15,7 @@ job('idod-adapter') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
 }
@@ -35,7 +35,7 @@ job('api-tool-publish') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
     configure windowsComponent ()
@@ -56,7 +56,7 @@ job('api-tool-verify') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
     configure windowsComponent ()
@@ -78,7 +78,7 @@ job('idod-adapter-publish') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
 }
@@ -90,7 +90,8 @@ job('idod-util-verify') {
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build', ''] // tasks, switches
+    String[] gradleConfigs = ['clean build', '--refresh-dependencies --no_daemon'] // tasks, switches
+    String fingerprintFile = "**/*.jar"
 
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
@@ -98,7 +99,7 @@ job('idod-util-verify') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter (fingerprintFile)
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)  
 }
@@ -120,7 +121,7 @@ job('idod-util-publish  ') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)  
     configure buildOtherProjects (otherprojects)
@@ -143,7 +144,7 @@ job('idondemand-core-release-jdk8') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs) 
 }
@@ -196,7 +197,7 @@ job('app-intc-deploy') {
     configure gerritConfigurations(gerritrepo)
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
-    configure artifactFingerprinter ()
+    configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs) 
 }

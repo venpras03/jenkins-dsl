@@ -81,7 +81,7 @@ class JobHelper {
                             'branches' {
                             'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch' {
                                 'compareType' ('PLAIN')
-                                'pattern' ('master')
+                                'pattern' ('.*')
                             }
                         }
                     }
@@ -131,11 +131,11 @@ class JobHelper {
         }
     }
 
-    static Closure artifactFingerprinter () {
+    static Closure artifactFingerprinter (String fingerprintFile) {
         return {
             it / 'publishers' << 'hudson.tasks.Fingerprinter' {
-                'targets' {
-                    'recordBuildArtifacts'('true')
+                'targets' (fingerprintFile) 
+                'recordBuildArtifacts'('true')
                 }
             }
         }
