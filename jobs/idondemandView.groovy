@@ -111,6 +111,8 @@ job('idod-util-publish  ') {
     String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['clean build upload', '--refresh-dependencies'] // tasks, switches
+    String otherprojects = "its-bouncer-publish"
+    String testReportPath = "**/build/test-results/*.xml"
 
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
@@ -121,6 +123,8 @@ job('idod-util-publish  ') {
     configure artifactFingerprinter ()
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)  
+    configure buildOtherProjects (otherprojects)
+    configure testReportJUnit (testReportPath)
 }
 
 

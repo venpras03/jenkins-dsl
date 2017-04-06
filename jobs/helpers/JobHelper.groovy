@@ -191,7 +191,31 @@ class JobHelper {
             'continueOnBuildFailure' ('false')
             }
         }
-    }    
+    } 
+
+    static Closure buildOtherProjects (String projects) {
+        return {
+            it / 'publishers' << 'hudson.tasks.BuildTrigger' {
+                'childProjects' (projects)
+                'threshold' {
+                    'name' ('SUCCESS')
+                    'ordinal' ('0')
+                    'color' ('BLUE')
+                    'completeBuild' ('true')
+                }
+            }
+        } 
+    }
+
+    static Closure testReportJUnit (String reportpath) {
+        return {
+            it / 'publishers' << 'hudson.tasks.junit.JUnitResultArchiver' {
+            'testResults' (reportpath)
+            'keepLongStdio' ('false')
+            'testDataPublishers' ()
+        }
+        }
+    }
 
 
 
