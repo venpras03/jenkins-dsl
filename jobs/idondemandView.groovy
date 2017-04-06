@@ -201,7 +201,29 @@ job('iwc-verify') {
     }   
 }
 
+//------------------------------------------- IDONDEMAND-WEBCONTROLS-CORE-PUBLISH ---------------------------------------------------//
 
+job('iwc-publish') {
+    def gerritrepo = 'idod/webcontrols/core'
+    def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
+    String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String otherprojects = "iwli-publish, iws-publish, iwue-publish"
+
+    jdk ('default')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/head/master')
+    configure gerritConfigurations(gerritrepo)
+    configure gerritTrigger (gerritrepo)
+    configure artifactArchiver (artifacts)    
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)
+    configure buildOtherProjects (otherprojects) 
+    configure artifactFingerprinter ('')    
+    //configure executeShell ("""git clean -fdx && git reset --hard HEAD echo WIX_ROOT_DIR: \$WIX_ROOT_DIR""")
+ 
+}
 
 //------------------------------------------ INTC-DEPLOY ----------------------------------------------------------------//
 
