@@ -136,7 +136,8 @@ job('idod-core-verify-jdk8') {
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['clean build buildRpms', '--refresh-dependencies -Pidod.integrate -Poracle  --stacktrace --no-daemon'] // tasks, switches
-
+    String testReportPath = "**/build/test-results/*.xml"
+    
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/head/master')
