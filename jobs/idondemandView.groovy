@@ -5,11 +5,11 @@ job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build', ''] // tasks, switches
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
+    String[] gradleConfigs = ['clean build', ''] // tasks, switches
 
     
-    jdk ('jdk8')
+    jdk ('linux-jdk8')
     configure logRotation (logConfigs)   
     configure gerritParameters ('refs/head/master')
     configure gerritConfigurations(gerritrepo)
@@ -18,17 +18,6 @@ job('idod-adapter') {
     configure artifactFingerprinter ('')
     configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
-
-    // configure {project ->
-    //         project << {
-    //         quietPeriod ('5')
-    //         canRoam ('false')
-    //         disabled ('false')
-    //         keepDependencies ('false')
-    //         concurrentBuild ('true')
-    //         assignedNode ('linux')     
-    //     }
-    // }
 }
 
 //------------------------------------------------- API-TOOL-PUBLISH ----------------------------------------//
@@ -37,7 +26,7 @@ job('api-tool-publish') {
     def gerritrepo = 'its/contrib/softcert-tool'
     def artifacts = 'build/exe/*,build/installer/*,build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('default')
@@ -58,7 +47,7 @@ job('api-tool-verify') {
     def gerritrepo = 'its/contrib/softcert-tool'
     def artifacts = 'build/exe/*,build/installer/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('default')
@@ -80,7 +69,7 @@ job('idod-adapter-publish') {
     def gerritrepo = 'idod/extras/adapter'
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('jdk8')
@@ -100,7 +89,7 @@ job('idod-util-verify') {
     def gerritrepo = 'idod/java/util'
     def artifacts = '**/build/test-results/test/*.xml'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build', '--refresh-dependencies --no_daemon'] // tasks, switches
     String fingerprintFile = "**/*.jar"
 
@@ -121,7 +110,7 @@ job('idod-util-publish  ') {
     def gerritrepo = 'idod/java/util'
     def artifacts = '**/build/libs/*'
     String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build upload', '--refresh-dependencies'] // tasks, switches
     String otherprojects = "its-bouncer-publish"
     String testReportPath = "**/build/test-results/*.xml"
@@ -145,7 +134,7 @@ job('idod-core-verify-jdk8') {
     def gerritrepo = 'idod/core'
     def artifacts = '**/build/test-results/test/*.xml'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build buildRpms', '--refresh-dependencies -Pidod.integrate -Poracle  --stacktrace --no-daemon'] // tasks, switches
     String testReportPath = "**/build/test-results/*.xml"
 
@@ -167,7 +156,7 @@ job('idondemand-core-release-jdk8') {
     def gerritrepo = 'idod/core'
     def artifacts = '**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
@@ -187,7 +176,7 @@ job('idondemand-core-release-jdk8') {
 job('iwc-verify') {
     def gerritrepo = 'idod/webcontrols/core'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build', '--stacktrace --refresh-dependencies'] // tasks
 
 
@@ -220,7 +209,7 @@ job('iwc-publish') {
     def gerritrepo = 'idod/webcontrols/core'
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = "iwli-publish, iws-publish, iwue-publish"
 
@@ -244,7 +233,7 @@ job('iwc-publish') {
 job('iwli-verify') {
     def gerritrepo = 'idod/webcontrols/local-issuance'
     String[] logConfigs = ['14', '40', '-1', '-1']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
     
     jdk ('jdk6')
@@ -263,7 +252,7 @@ job('iwli-publish') {
     def gerritrepo = 'idod/webcontrols/local-issuance'
     def artifacts = 'idod-printctrl/Release/*.dll,idod-printctrl/target/classes/main/printctrl/*.msi'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = 'idondemand-core-release-jdk8'
 
@@ -287,7 +276,7 @@ job('iws-verify') {
     def gerritrepo = 'idod/webcontrols/smartcard'
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
     String otherprojects = 'iwli-publish'
 
@@ -311,7 +300,7 @@ job('iws-publish') {
     def gerritrepo = 'idod/webcontrols/smartcard'
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = 'iwli-publish'
 
@@ -335,7 +324,7 @@ job('iwue-verify') {
     def gerritrepo = 'idod/webcontrols/user-enrollment'
     def artifacts = 'idod-webcontrols/Release/*.dll,idod-webcontrols/target/classes/main/webcontrols/*.msi'
     String[] logConfigs = ['14', '40', '-1', '-1']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
 
     jdk ('jdk6')
@@ -355,7 +344,7 @@ job('iwue-publish') {
     def gerritrepo = 'idod/webcontrols/user-enrollment'
     def artifacts = 'idod-webcontrols/Release/*.dll,idod-webcontrols/target/classes/main/webcontrols/*.msi'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'windows'] // quietPeriod, machine
     String[] gradleConfigs = ['clean build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment -p idod-webcontrols'] // tasks
 
     jdk ('default')
@@ -375,7 +364,7 @@ job('app-intc-deploy') {
     def gerritrepo = '  idod/chef/instances/int'
     def artifacts = '**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['-1', '10', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'false', 'linux'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     jdk ('linux-jdk8')
