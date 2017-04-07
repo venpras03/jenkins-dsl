@@ -16,19 +16,19 @@ job('idod-adapter') {
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
     configure artifactFingerprinter ('')
-    //configure otherConfigurations (otherConfigs)
+    configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
 
-    configure {project ->
-            project << {
-            quietPeriod ('5')
-            canRoam ('false')
-            disabled ('false')
-            keepDependencies ('false')
-            concurrentBuild ('true')
-            assignedNode ('linux')     
-        }
-    }
+    // configure {project ->
+    //         project << {
+    //         quietPeriod ('5')
+    //         canRoam ('false')
+    //         disabled ('false')
+    //         keepDependencies ('false')
+    //         concurrentBuild ('true')
+    //         assignedNode ('linux')     
+    //     }
+    // }
 }
 
 //------------------------------------------------- API-TOOL-PUBLISH ----------------------------------------//
