@@ -5,7 +5,7 @@ job('idod-adapter') {
     def gerritrepo = 'idod/extras/adapter'
     def artifacts = 'build/libs/*,build/distributions/*,**/build/libs/*,**/build/distributions/*'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
-    String[] otherConfigs = ['40', 'true', 'windows'] // quietPeriod, canRoam, machine
+    String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
     String[] gradleConfigs = ['build', ''] // tasks, switches
 
     
@@ -16,8 +16,19 @@ job('idod-adapter') {
     configure gerritTrigger (gerritrepo)
     configure artifactArchiver (artifacts)
     configure artifactFingerprinter ('')
-    configure otherConfigurations (otherConfigs)
+    //configure otherConfigurations (otherConfigs)
     configure gradleConfigurations (gradleConfigs)
+
+    configure {project ->
+            project << {
+            quietPeriod ('5')
+            canRoam ('false')
+            disabled ('false')
+            keepDependencies ('false')
+            concurrentBuild ('true')
+            assignedNode ('linux')     
+        }
+    }
 }
 
 //------------------------------------------------- API-TOOL-PUBLISH ----------------------------------------//
@@ -177,7 +188,7 @@ job('iwc-verify') {
     def gerritrepo = 'idod/webcontrols/core'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build', '-g e:/gradle --stacktrace --refresh-dependencies'] // tasks
+    String[] gradleConfigs = ['build', '--stacktrace --refresh-dependencies'] // tasks
 
 
     jdk ('default')
@@ -210,7 +221,7 @@ job('iwc-publish') {
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String[] gradleConfigs = ['build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = "iwli-publish, iws-publish, iwue-publish"
 
     jdk ('jkd6')
@@ -253,7 +264,7 @@ job('iwli-publish') {
     def artifacts = 'idod-printctrl/Release/*.dll,idod-printctrl/target/classes/main/printctrl/*.msi'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String[] gradleConfigs = ['build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = 'idondemand-core-release-jdk8'
 
     jdk ('default')
@@ -277,7 +288,7 @@ job('iws-verify') {
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['clean build', '-g e:/gradle --stacktrace --refresh-dependencies'] // tasks
+    String[] gradleConfigs = ['clean build', '--stacktrace --refresh-dependencies'] // tasks
     String otherprojects = 'iwli-publish'
 
     jdk ('default')
@@ -301,7 +312,7 @@ job('iws-publish') {
     def artifacts = '**/*.zip,**/*.msi,**/*.jar,**/*.dll,**/*.exe'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['clean build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
+    String[] gradleConfigs = ['clean build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment'] // tasks
     String otherprojects = 'iwli-publish'
 
     jdk ('default')
@@ -345,7 +356,7 @@ job('iwue-publish') {
     def artifacts = 'idod-webcontrols/Release/*.dll,idod-webcontrols/target/classes/main/webcontrols/*.msi'
     String[] logConfigs = ['14', '40', '7', '20'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
     String[] otherConfigs = ['40', 'false', 'windows'] // quietPeriod, canRoam, machine
-    String[] gradleConfigs = ['clean build upload', '-g e:/gradle --stacktrace --refresh-dependencies -Denvironment=deployment -p idod-webcontrols'] // tasks
+    String[] gradleConfigs = ['clean build upload', '--stacktrace --refresh-dependencies -Denvironment=deployment -p idod-webcontrols'] // tasks
 
     jdk ('default')
     displayName ('idOnDemand Webcontrols User Enrollment [Publish]')
