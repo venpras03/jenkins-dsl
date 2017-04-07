@@ -144,7 +144,7 @@ class JobHelper {
 
     static Closure otherConfigurations(String[] otherConfigs) {
         return {
-            it / 'project' << {
+            it / << {
                 'quietPeriod' ('5')
                 'canRoam' ('false')
                 'disabled' ('false')
