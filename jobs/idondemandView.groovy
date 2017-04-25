@@ -119,7 +119,7 @@ job('idod-util-publish  ') {
     jdk ('linux-jdk8')
     configure logRotation (logConfigs)
     configure gerritParameters ('refs/heads/master')
-    configure   (gerritparams)
+    configure gerritConfigurations (gerritparams)
     configure gerritTrigger (gerritparams)
     configure artifactArchiver (artifacts)
     configure artifactFingerprinter ('')
