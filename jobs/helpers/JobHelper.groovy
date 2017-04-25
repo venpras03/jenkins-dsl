@@ -24,14 +24,14 @@ class JobHelper {
         }     
     }
 
-    static Closure gerritConfigurations(String gerritrepo) {
+    static Closure gerritConfigurations(String[] gerritparams) {
         return {
             it / 'scm' (class:'hudson.plugins.git.GitSCM', plugin:plugin_git_version) << {
                 'configVersion' ('2')
                 'userRemoteConfigs' {
                     'hudson.plugins.git.UserRemoteConfig' {
                         'refspec' ('$GERRIT_REFSPEC')
-                        'url' ('ssh://idondemandhudson@git.dev.identiv.com:29418/'+gerritrepo)
+                        'url' ('ssh://idondemandhudson@git.dev.identiv.com:29418/'+gerritparams[0])
                         'credentialsId' ('b4b11ae3-8b97-4ea4-955e-478d2b93d478')
                     }
                 }           
@@ -69,7 +69,7 @@ class JobHelper {
         }
     }
 
-    static Closure gerritTrigger (String gerritrepo) {
+    static Closure gerritTrigger (String[]  gerritparams) {
         return {
             it / 'triggers' <<'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger' \
                                                                         (plugin:plugin_gerrit_trigger_version) {     
@@ -77,7 +77,7 @@ class JobHelper {
                 'gerritProjects' {
                     'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject' {
                         'compareType' ('PLAIN')
-                        'pattern'(gerritrepo)
+                        'pattern'(gerritparams[0])
                             'branches' {
                             'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch' {
                                 'compareType' ('PLAIN')
@@ -104,7 +104,7 @@ class JobHelper {
                 'customUrl'()
                 'serverName'('git.dev.identiv.com')
                     'triggerOnEvents' {
-                        if (eventType == "changemerged")
+                        if (gerritparams[1] == "publish")
                         {
                             'com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginChangeMergedEvent' {}
                         } else {
