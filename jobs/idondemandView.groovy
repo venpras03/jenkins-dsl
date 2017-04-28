@@ -396,13 +396,13 @@ job('its-des-keygen-verify') {
     configure gerritConfigurations(gerritparams)
     configure gerritTrigger (gerritparams)
     configure artifactArchiver (artifacts)
-    configure otherConfigurations (otherConfigs)
+    configure otherConfigurations (otherConfigs)    
     configure gradleConfigurations (gradleConfigs)    
 }
 
 //------------------------------------------- IDOD-DESFIRE-PUBLISH ---------------------------------------------------//
 
-job('its-des-keygen-publish  ') {
+job('its-des-keygen-release  ') {
     String[] gerritparams = ['its/contrib/desfire-key-gen', 'publish']
     def artifacts = '**/build/libs/*'
     String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
