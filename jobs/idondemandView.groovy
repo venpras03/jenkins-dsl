@@ -402,7 +402,7 @@ job('its-des-keygen-verify') {
 
 //------------------------------------------- IDOD-DESFIRE-PUBLISH ---------------------------------------------------//
 
-job('its-des-keygen-release  ') {
+job('its-des-keygen-release') {
     String[] gerritparams = ['its/contrib/desfire-key-gen', 'publish']
     def artifacts = '**/build/libs/*'
     String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
