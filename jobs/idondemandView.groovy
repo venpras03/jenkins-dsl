@@ -379,4 +379,44 @@ job('app-intc-deploy') {
     configure gradleConfigurations (gradleConfigs) 
 }
 
+//------------------------------------------- IDOD-DESFIRE-VERIFY ---------------------------------------------------//
 
+job('its-des-keygen-verify') {
+    String[] gerritparams = ['its/contrib/desfire-key-gen', 'verify']
+    def artifacts = '**/*.jar'
+    String[] logConfigs = ['14', '40', '-1', '-1'] // daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
+    String[] gradleConfigs = ['clean build', '--refresh-dependencies --no-daemon'] // tasks, switches
+    String fingerprintFile = "**/*.jar"
+    String testReportPath = "**/build/test-results/*.xml"
+
+    jdk ('linux-jdk8')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/heads/master')
+    configure gerritConfigurations(gerritparams)
+    configure gerritTrigger (gerritparams)
+    configure artifactArchiver (artifacts)
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)    
+}
+
+//------------------------------------------- IDOD-DESFIRE-PUBLISH ---------------------------------------------------//
+
+job('its-des-keygen-publish  ') {
+    String[] gerritparams = ['its/contrib/desfire-key-gen', 'publish']
+    def artifacts = '**/build/libs/*'
+    String[] logConfigs = ['14', '40', '7', '20']// daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep 
+    String[] otherConfigs = ['40', 'linux'] // quietPeriod, machine
+    String[] gradleConfigs = ['clean build', '--refresh-dependencies'] // tasks, switches
+    String testReportPath = "**/build/test-results/*.xml"
+
+    jdk ('linux-jdk8')
+    configure logRotation (logConfigs)
+    configure gerritParameters ('refs/heads/master')
+    configure gerritConfigurations (gerritparams)
+    configure gerritTrigger (gerritparams)
+    configure artifactArchiver (artifacts)
+    configure artifactFingerprinter ('')
+    configure otherConfigurations (otherConfigs)
+    configure gradleConfigurations (gradleConfigs)  
+}
